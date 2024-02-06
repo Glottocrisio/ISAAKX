@@ -1,2 +1,2 @@
-# ISAKE
-Interestingness-grounded Semi-Automatic Knowledge Expansion
+# ISAAKXX
+Interestingness-grounded Semi-Automatic Knowledge Expansion & Extraction
