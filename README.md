@@ -1,2 +1,2 @@
-# ISAAKXX
-Interestingness-grounded Semi-Automatic Knowledge Expansion & Extraction
+# ISAAKX
+Interestingness-grounded Semi-Automatic Knowledge eXpansion
