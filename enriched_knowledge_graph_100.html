@@ -1,0 +1,274 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 750px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/House_of_Representatives_(Egypt)", "label": "House of Representatives (Egypt)", "shape": "dot", "size": 20, "title": "House of Representatives (Egypt)"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Egypt", "label": "Egypt", "shape": "dot", "size": 20, "title": "Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Late_Period_of_ancient_Egypt", "label": "Late Period of ancient Egypt", "shape": "dot", "size": 20, "title": "Late Period of ancient Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Sais,_Egypt", "label": "Sais, Egypt", "shape": "dot", "size": 20, "title": "Sais, Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Hellenistic period", "label": "Hellenistic period", "shape": "dot", "size": 20, "title": "Hellenistic period"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Alexander the Great", "label": "Alexander the Great", "shape": "dot", "size": 20, "title": "Alexander the Great"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Antalya", "label": "Antalya", "shape": "dot", "size": 20, "title": "Antalya"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Athena", "label": "Athena", "shape": "dot", "size": 20, "title": "Athena"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Ammonius_Saccas", "label": "Ammonius Saccas", "shape": "dot", "size": 20, "title": "Ammonius Saccas"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Egypt_(Roman_province)", "label": "Egypt (Roman province)", "shape": "dot", "size": 20, "title": "Egypt (Roman province)"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Coptic language", "label": "Coptic language", "shape": "dot", "size": 20, "title": "Coptic language"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Ptolemaic_dynasty", "label": "Ptolemaic dynasty", "shape": "dot", "size": 20, "title": "Ptolemaic dynasty"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Ptolemy_Philadelphus_(son_of_Cleopatra)", "label": "Ptolemy Philadelphus (son of Cleopatra)", "shape": "dot", "size": 20, "title": "Ptolemy Philadelphus (son of Cleopatra)"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Art_of_ancient_Egypt", "label": "Art of ancient Egypt", "shape": "dot", "size": 20, "title": "Art of ancient Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Hor-Aha", "label": "Hor Aha", "shape": "dot", "size": 20, "title": "Hor Aha"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "https://en.wikipedia.org/wiki/Hor-Aha", "label": "Hor Aha", "shape": "dot", "size": 20, "title": "Hor Aha"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Macedonia_(ancient_kingdom)", "label": "Macedonia (ancient kingdom)", "shape": "dot", "size": 20, "title": "Macedonia (ancient kingdom)"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Wepwawet", "label": "Wepwawet", "shape": "dot", "size": 20, "title": "Wepwawet"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Asyut", "label": "Asyut", "shape": "dot", "size": 20, "title": "Asyut"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Amenemhat I", "label": "Amenemhat I", "shape": "dot", "size": 20, "title": "Amenemhat I"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Pharaoh of Egypt", "label": "Pharaoh of Egypt", "shape": "dot", "size": 20, "title": "Pharaoh of Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Justin_Trudeau", "label": "Justin Trudeau", "shape": "dot", "size": 20, "title": "Justin Trudeau"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/David_Johnston", "label": "David Johnston", "shape": "dot", "size": 20, "title": "David Johnston"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Ancient_Greek_Religion", "label": "Ancient Greek Religion", "shape": "dot", "size": 20, "title": "Ancient Greek Religion"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Ancient_Greek_religion", "label": "Ancient Greek religion", "shape": "dot", "size": 20, "title": "Ancient Greek religion"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Alexandria", "label": "Alexandria", "shape": "dot", "size": 20, "title": "Alexandria"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/List_of_historical_capitals_of_Egypt", "label": "List of historical capitals of Egypt", "shape": "dot", "size": 20, "title": "List of historical capitals of Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Cairo", "label": "Cairo", "shape": "dot", "size": 20, "title": "Cairo"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Anubis", "label": "Anubis", "shape": "dot", "size": 20, "title": "Anubis"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "First Dynasty of Egypt", "label": "First Dynasty of Egypt", "shape": "dot", "size": 20, "title": "First Dynasty of Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Philo", "label": "Philo", "shape": "dot", "size": 20, "title": "Philo"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Djer", "label": "Djer", "shape": "dot", "size": 20, "title": "Djer"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "https://en.wikipedia.org/wiki/Djer", "label": "Djer", "shape": "dot", "size": 20, "title": "Djer"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Alexander_the_Great", "label": "Alexander the Great", "shape": "dot", "size": 20, "title": "Alexander the Great"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Alexander_IV_of_Macedon", "label": "Alexander IV of Macedon", "shape": "dot", "size": 20, "title": "Alexander IV of Macedon"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Greece", "label": "Greece", "shape": "dot", "size": 20, "title": "Greece"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Country", "label": "Country", "shape": "dot", "size": 20, "title": "Country"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Roman Egypt", "label": "Roman Egypt", "shape": "dot", "size": 20, "title": "Roman Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Roman province that encompassed most of modern-day Egypt", "label": "Roman province that encompassed most of modern day Egypt", "shape": "dot", "size": 20, "title": "Roman province that encompassed most of modern day Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Ptolemy_I_Soter", "label": "Ptolemy I Soter", "shape": "dot", "size": 20, "title": "Ptolemy I Soter"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Macedon", "label": "Macedon", "shape": "dot", "size": 20, "title": "Macedon"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Hermes", "label": "Hermes", "shape": "dot", "size": 20, "title": "Hermes"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Myrtilus", "label": "Myrtilus", "shape": "dot", "size": 20, "title": "Myrtilus"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "https://en.wikipedia.org/wiki/Alexander_the_Great", "label": "Alexander the Great", "shape": "dot", "size": 20, "title": "Alexander the Great"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Favorinus", "label": "Favorinus", "shape": "dot", "size": 20, "title": "Favorinus"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Lucian", "label": "Lucian", "shape": "dot", "size": 20, "title": "Lucian"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Parliament_of_Egypt", "label": "Parliament of Egypt", "shape": "dot", "size": 20, "title": "Parliament of Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Cappadocian_Greek", "label": "Cappadocian Greek", "shape": "dot", "size": 20, "title": "Cappadocian Greek"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Hellenic_languages", "label": "Hellenic languages", "shape": "dot", "size": 20, "title": "Hellenic languages"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Amunet", "label": "Amunet", "shape": "dot", "size": 20, "title": "Amunet"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Goddess", "label": "Goddess", "shape": "dot", "size": 20, "title": "Goddess"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Progress", "label": "Progress", "shape": "dot", "size": 20, "title": "Progress"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Ancient_Greece", "label": "Ancient Greece", "shape": "dot", "size": 20, "title": "Ancient Greece"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Wars_of_Alexander_the_Great", "label": "Wars of Alexander the Great", "shape": "dot", "size": 20, "title": "Wars of Alexander the Great"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Indian_campaign_of_Alexander_the_Great", "label": "Indian campaign of Alexander the Great", "shape": "dot", "size": 20, "title": "Indian campaign of Alexander the Great"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Roman_Egypt", "label": "Roman Egypt", "shape": "dot", "size": 20, "title": "Roman Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://en.wikipedia.org/wiki/Roman_Egypt", "label": "Roman Egypt", "shape": "dot", "size": 20, "title": "Roman Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Jagannath", "label": "Jagannath", "shape": "dot", "size": 20, "title": "Jagannath"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Deity", "label": "Deity", "shape": "dot", "size": 20, "title": "Deity"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Demetrius_the_Fair", "label": "Demetrius the Fair", "shape": "dot", "size": 20, "title": "Demetrius the Fair"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Gizah", "label": "Gizah", "shape": "dot", "size": 20, "title": "Gizah"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Giza", "label": "Giza", "shape": "dot", "size": 20, "title": "Giza"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Philip_II_of_Macedon", "label": "Philip II of Macedon", "shape": "dot", "size": 20, "title": "Philip II of Macedon"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Amun", "label": "Amun", "shape": "dot", "size": 20, "title": "Amun"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "https://en.wikipedia.org/wiki/Amun", "label": "Amun", "shape": "dot", "size": 20, "title": "Amun"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/French_language", "label": "French language", "shape": "dot", "size": 20, "title": "French language"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Acadian_French", "label": "Acadian French", "shape": "dot", "size": 20, "title": "Acadian French"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Classical_Anatolia", "label": "Classical Anatolia", "shape": "dot", "size": 20, "title": "Classical Anatolia"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Second_War_of_the_Diadochi", "label": "Second War of the Diadochi", "shape": "dot", "size": 20, "title": "Second War of the Diadochi"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Battle_of_Megiddo_(609_BC)", "label": "Battle of Megiddo (609 BC)", "shape": "dot", "size": 20, "title": "Battle of Megiddo (609 BC)"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Philip_III_of_Macedon", "label": "Philip III of Macedon", "shape": "dot", "size": 20, "title": "Philip III of Macedon"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Greeks", "label": "Greeks", "shape": "dot", "size": 20, "title": "Greeks"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Greek_language", "label": "Greek language", "shape": "dot", "size": 20, "title": "Greek language"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Egyptian_pound", "label": "Egyptian pound", "shape": "dot", "size": 20, "title": "Egyptian pound"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Rhea_(mythology)", "label": "Rhea (mythology)", "shape": "dot", "size": 20, "title": "Rhea (mythology)"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Persians", "label": "Persians", "shape": "dot", "size": 20, "title": "Persians"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/List_of_ancient_Iranian_peoples", "label": "List of ancient Iranian peoples", "shape": "dot", "size": 20, "title": "List of ancient Iranian peoples"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Egyptiotes", "label": "Egyptiotes", "shape": "dot", "size": 20, "title": "Egyptiotes"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Buchis", "label": "Buchis", "shape": "dot", "size": 20, "title": "Buchis"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Amun", "label": "Amun", "shape": "dot", "size": 20, "title": "Amun"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Wosret", "label": "Wosret", "shape": "dot", "size": 20, "title": "Wosret"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Amun-Ra", "label": "Amun Ra", "shape": "dot", "size": 20, "title": "Amun Ra"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Battle_of_Gaugamela", "label": "Battle of Gaugamela", "shape": "dot", "size": 20, "title": "Battle of Gaugamela"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Dionysus", "label": "Dionysus", "shape": "dot", "size": 20, "title": "Dionysus"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Osiris", "label": "Osiris", "shape": "dot", "size": 20, "title": "Osiris"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Ancient_Greek", "label": "Ancient Greek", "shape": "dot", "size": 20, "title": "Ancient Greek"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Mediterranean_Sea", "label": "Mediterranean Sea", "shape": "dot", "size": 20, "title": "Mediterranean Sea"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Apulian_vase_painting", "label": "Apulian vase painting", "shape": "dot", "size": 20, "title": "Apulian vase painting"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Extinct Semitic language of Mesopotamia", "label": "Extinct Semitic language of Mesopotamia", "shape": "dot", "size": 20, "title": "Extinct Semitic language of Mesopotamia"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "https://en.wikipedia.org/wiki/Akkadian_language", "label": "Akkadian language", "shape": "dot", "size": 20, "title": "Akkadian language"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Battle_of_Issus", "label": "Battle of Issus", "shape": "dot", "size": 20, "title": "Battle of Issus"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Egyptian hieroglyphs", "label": "Egyptian hieroglyphs", "shape": "dot", "size": 20, "title": "Egyptian hieroglyphs"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "https://en.wikipedia.org/wiki/Egyptian_hieroglyphs", "label": "Egyptian hieroglyphs", "shape": "dot", "size": 20, "title": "Egyptian hieroglyphs"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Hellenistic_period", "label": "Hellenistic period", "shape": "dot", "size": 20, "title": "Hellenistic period"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Egyptian and Berber deity", "label": "Egyptian and Berber deity", "shape": "dot", "size": 20, "title": "Egyptian and Berber deity"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Darius_III", "label": "Darius III", "shape": "dot", "size": 20, "title": "Darius III"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "Dynasty of ancient Egypt", "label": "Dynasty of ancient Egypt", "shape": "dot", "size": 20, "title": "Dynasty of ancient Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "https://en.wikipedia.org/wiki/First_Dynasty_of_Egypt", "label": "First Dynasty of Egypt", "shape": "dot", "size": 20, "title": "First Dynasty of Egypt"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Interpretatio_graeca", "label": "Interpretatio graeca", "shape": "dot", "size": 20, "title": "Interpretatio graeca"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Antigonus_I_Monophthalmus", "label": "Antigonus I Monophthalmus", "shape": "dot", "size": 20, "title": "Antigonus I Monophthalmus"}, {"color": "#4CAF50", "font": {"color": "black"}, "id": "http://dbpedia.org/resource/Demetrius_I_of_Macedon", "label": "Demetrius I of Macedon", "shape": "dot", "size": 20, "title": "Demetrius I of Macedon"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "http://dbpedia.org/resource/House_of_Representatives_(Egypt)", "label": "location", "to": "http://dbpedia.org/resource/Egypt"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Egypt", "label": "capital", "to": "http://dbpedia.org/resource/Cairo"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Egypt", "label": "legislature", "to": "http://dbpedia.org/resource/Parliament_of_Egypt"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Egypt", "label": "currency", "to": "http://dbpedia.org/resource/Egyptian_pound"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Late_Period_of_ancient_Egypt", "label": "capital", "to": "http://dbpedia.org/resource/Sais,_Egypt"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Late_Period_of_ancient_Egypt", "label": "leader", "to": "http://dbpedia.org/resource/Darius_III"}, {"arrows": "to", "from": "Hellenistic period", "label": "P67", "to": "Alexander the Great"}, {"arrows": "to", "from": "Alexander the Great", "label": "P102", "to": "https://en.wikipedia.org/wiki/Alexander_the_Great"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Antalya", "label": "blankInfoSec", "to": "http://dbpedia.org/resource/Athena"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Ammonius_Saccas", "label": "deathPlace", "to": "http://dbpedia.org/resource/Egypt_(Roman_province)"}, {"arrows": "to", "from": "Coptic language", "label": "P67", "to": "Alexander the Great"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Ptolemaic_dynasty", "label": "finalRuler", "to": "http://dbpedia.org/resource/Ptolemy_Philadelphus_(son_of_Cleopatra)"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Ptolemaic_dynasty", "label": "country", "to": "http://dbpedia.org/resource/Macedonia_(ancient_kingdom)"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Art_of_ancient_Egypt", "label": "seeAlso", "to": "http://dbpedia.org/resource/Egypt_(Roman_province)"}, {"arrows": "to", "from": "Hor-Aha", "label": "P67", "to": "https://en.wikipedia.org/wiki/Hor-Aha"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Macedonia_(ancient_kingdom)", "label": "wikiPageWikiLink", "to": "http://dbpedia.org/resource/Amun-Ra"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Wepwawet", "label": "cultCenter", "to": "http://dbpedia.org/resource/Asyut"}, {"arrows": "to", "from": "Amenemhat I", "label": "P196", "to": "Pharaoh of Egypt"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Justin_Trudeau", "label": "governorGeneral", "to": "http://dbpedia.org/resource/David_Johnston"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Ancient_Greek_Religion", "label": "wikiPageRedirects", "to": "http://dbpedia.org/resource/Ancient_Greek_religion"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Alexandria", "label": "title", "to": "http://dbpedia.org/resource/List_of_historical_capitals_of_Egypt"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Alexandria", "label": "country", "to": "http://dbpedia.org/resource/Egypt"}, {"arrows": "to", "from": "Anubis", "label": "P67", "to": "First Dynasty of Egypt"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Philo", "label": "birthPlace", "to": "http://dbpedia.org/resource/Egypt_(Roman_province)"}, {"arrows": "to", "from": "Djer", "label": "P102", "to": "https://en.wikipedia.org/wiki/Djer"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Alexander_the_Great", "label": "after", "to": "http://dbpedia.org/resource/Alexander_IV_of_Macedon"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Alexander_the_Great", "label": "predecessor", "to": "http://dbpedia.org/resource/Philip_II_of_Macedon"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Greece", "label": "hypernym", "to": "http://dbpedia.org/resource/Country"}, {"arrows": "to", "from": "Roman Egypt", "label": "P196", "to": "Roman province that encompassed most of modern-day Egypt"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Ptolemy_I_Soter", "label": "birthPlace", "to": "http://dbpedia.org/resource/Macedon"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Hermes", "label": "children", "to": "http://dbpedia.org/resource/Myrtilus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Favorinus", "label": "influenced", "to": "http://dbpedia.org/resource/Lucian"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Cappadocian_Greek", "label": "fam", "to": "http://dbpedia.org/resource/Hellenic_languages"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Amunet", "label": "hypernym", "to": "http://dbpedia.org/resource/Goddess"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Progress", "label": "wikiPageWikiLink", "to": "http://dbpedia.org/resource/Ancient_Greece"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Ancient_Greece", "label": "wikiPageWikiLink", "to": "http://dbpedia.org/resource/Battle_of_Issus"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Wars_of_Alexander_the_Great", "label": "combatant", "to": "http://dbpedia.org/resource/Indian_campaign_of_Alexander_the_Great"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Indian_campaign_of_Alexander_the_Great", "label": "commander", "to": "http://dbpedia.org/resource/Alexander_the_Great"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Roman_Egypt", "label": "isPrimaryTopicOf", "to": "http://en.wikipedia.org/wiki/Roman_Egypt"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Jagannath", "label": "hypernym", "to": "http://dbpedia.org/resource/Deity"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Demetrius_the_Fair", "label": "house", "to": "http://dbpedia.org/resource/Ptolemaic_dynasty"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Gizah", "label": "wikiPageRedirects", "to": "http://dbpedia.org/resource/Giza"}, {"arrows": "to", "from": "Amun", "label": "P67", "to": "https://en.wikipedia.org/wiki/Amun"}, {"arrows": "to", "from": "Amun", "label": "P196", "to": "Egyptian and Berber deity"}, {"arrows": "to", "from": "http://dbpedia.org/resource/French_language", "label": "wikiPageWikiLink", "to": "http://dbpedia.org/resource/Acadian_French"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Classical_Anatolia", "label": "wikiPageWikiLink", "to": "http://dbpedia.org/resource/Second_War_of_the_Diadochi"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Battle_of_Megiddo_(609_BC)", "label": "combatant", "to": "http://dbpedia.org/resource/Late_Period_of_ancient_Egypt"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Philip_III_of_Macedon", "label": "parent", "to": "http://dbpedia.org/resource/Philip_II_of_Macedon"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Greeks", "label": "languages", "to": "http://dbpedia.org/resource/Greek_language"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Rhea_(mythology)", "label": "wikiPageWikiLink", "to": "http://dbpedia.org/resource/Hermes"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Persians", "label": "seeAlso", "to": "http://dbpedia.org/resource/List_of_ancient_Iranian_peoples"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Egyptiotes", "label": "language", "to": "http://dbpedia.org/resource/Greek_language"}, {"arrows": "to", "from": "Buchis", "label": "P67", "to": "Alexander the Great"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Amun", "label": "consort", "to": "http://dbpedia.org/resource/Wosret"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Battle_of_Gaugamela", "label": "title", "to": "http://dbpedia.org/resource/Alexander_the_Great"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Dionysus", "label": "equivalent", "to": "http://dbpedia.org/resource/Osiris"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Ancient_Greek", "label": "spokenIn", "to": "http://dbpedia.org/resource/Mediterranean_Sea"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Apulian_vase_painting", "label": "wikiPageWikiLink", "to": "http://dbpedia.org/resource/Hermes"}, {"arrows": "to", "from": "Extinct Semitic language of Mesopotamia", "label": "P196", "to": "https://en.wikipedia.org/wiki/Akkadian_language"}, {"arrows": "to", "from": "Egyptian hieroglyphs", "label": "P102", "to": "https://en.wikipedia.org/wiki/Egyptian_hieroglyphs"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Hellenistic_period", "label": "seeAlso", "to": "http://dbpedia.org/resource/Philip_II_of_Macedon"}, {"arrows": "to", "from": "Dynasty of ancient Egypt", "label": "P67", "to": "https://en.wikipedia.org/wiki/First_Dynasty_of_Egypt"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Interpretatio_graeca", "label": "wikiPageWikiLink", "to": "http://dbpedia.org/resource/Hermes"}, {"arrows": "to", "from": "http://dbpedia.org/resource/Antigonus_I_Monophthalmus", "label": "issue", "to": "http://dbpedia.org/resource/Demetrius_I_of_Macedon"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
